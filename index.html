@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dispatch Goods — Smarter Campus Dining</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-deep: #1a3a2a;
+      --green-mid: #2d5c3f;
+      --green-fresh: #4a8c5c;
+      --green-light: #a8d5b5;
+      --cream: #f7f3ec;
+      --warm-white: #fdfaf5;
+      --gold: #c8a84b;
+      --gold-light: #e8d08a;
+      --charcoal: #2a2a2a;
+      --text-mid: #4a5a50;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--warm-white);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--green-deep);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 24px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 110% 20%, rgba(74,140,92,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at -10% 80%, rgba(200,168,75,0.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.1s forwards;
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(38px, 9vw, 68px);
+      line-height: 1.08;
+      color: var(--cream);
+      margin-bottom: 24px;
+      max-width: 700px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.25s forwards;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--green-light);
+      max-width: 520px;
+      margin-bottom: 44px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.4s forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold);
+      color: var(--green-deep);
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      padding: 16px 30px;
+      border-radius: 50px;
+      transition: background 0.2s, transform 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.55s forwards;
+      width: fit-content;
+    }
+    .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .hero-cta svg { transition: transform 0.2s; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    .hero-stat-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 60px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.7s forwards;
+    }
+
+    .hero-stat { border-left: 2px solid var(--green-fresh); padding-left: 14px; }
+    .hero-stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: var(--cream);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 12px;
+      color: var(--green-light);
+      margin-top: 4px;
+      font-weight: 300;
+    }
+
+    /* ── SECTION WRAPPERS ── */
+    .section {
+      padding: 80px 24px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green-fresh);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 6vw, 44px);
+      line-height: 1.15;
+      color: var(--green-deep);
+      margin-bottom: 20px;
+    }
+
+    .section-body {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text-mid);
+      font-weight: 300;
+    }
+
+    /* ── PROBLEM BAND ── */
+    .problem-band {
+      background: var(--cream);
+      padding: 64px 24px;
+    }
+
+    .problem-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .problem-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .problem-card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px 24px;
+      border-left: 4px solid var(--green-light);
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .problem-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--green-deep);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 20px;
+    }
+
+    .problem-card h3 {
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--green-deep);
+      margin-bottom: 6px;
+    }
+
+    .problem-card p {
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-section { background: var(--warm-white); }
+
+    .steps {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step {
+      display: flex;
+      gap: 24px;
+      padding: 32px 0;
+      border-bottom: 1px solid rgba(74,140,92,0.12);
+      position: relative;
+    }
+
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 52px;
+      color: var(--green-light);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 52px;
+    }
+
+    .step-content h3 {
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--green-deep);
+      margin-bottom: 8px;
+      margin-top: 6px;
+    }
+
+    .step-content p {
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* ── PROOF / RESULTS ── */
+    .proof-band {
+      background: var(--green-deep);
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .proof-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 70% at 100% 0%, rgba(200,168,75,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .proof-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .proof-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 16px;
+    }
+
+    .proof-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 6vw, 44px);
+      color: var(--cream);
+      margin-bottom: 48px;
+      line-height: 1.15;
+    }
+
+    .proof-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .proof-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(168,213,181,0.2);
+      border-radius: 16px;
+      padding: 32px 28px;
+    }
+
+    .proof-card-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      background: rgba(200,168,75,0.12);
+      border-radius: 20px;
+      padding: 5px 12px;
+      margin-bottom: 18px;
+    }
+
+    .proof-stat {
+      font-family: 'DM Serif Display', serif;
+      font-size: 48px;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .proof-stat-label {
+      font-size: 15px;
+      color: var(--green-light);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .proof-quote {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(168,213,181,0.15);
+      font-size: 14px;
+      color: var(--green-light);
+      font-style: italic;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .proof-attribution {
+      font-size: 12px;
+      color: rgba(168,213,181,0.6);
+      margin-top: 8px;
+      font-style: normal;
+    }
+
+    /* ── WHY HIGHER ED ── */
+    .why-section { background: var(--cream); padding: 80px 24px; }
+    .why-inner { max-width: 760px; margin: 0 auto; }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .why-item {
+      background: white;
+      border-radius: 14px;
+      padding: 24px 22px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .why-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .why-item h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--green-deep);
+      margin-bottom: 5px;
+    }
+
+    .why-item p {
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── FORM SECTION ── */
+    .form-section {
+      background: var(--warm-white);
+      padding: 80px 24px 100px;
+    }
+
+    .form-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-card {
+      background: white;
+      border-radius: 24px;
+      padding: 44px 32px;
+      box-shadow: 0 4px 40px rgba(26,58,42,0.08);
+      border: 1px solid rgba(74,140,92,0.1);
+    }
+
+    .form-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 30px;
+      color: var(--green-deep);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .form-sub {
+      font-size: 14px;
+      color: var(--text-mid);
+      margin-bottom: 32px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--green-deep);
+      margin-bottom: 8px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid rgba(74,140,92,0.2);
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--charcoal);
+      background: var(--warm-white);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--green-fresh);
+      box-shadow: 0 0 0 3px rgba(74,140,92,0.1);
+    }
+
+    textarea { resize: vertical; min-height: 90px; }
+
+    .form-divider {
+      height: 1px;
+      background: rgba(74,140,92,0.1);
+      margin: 28px 0;
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--green-deep);
+      color: var(--cream);
+      border: none;
+      border-radius: 50px;
+      padding: 18px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .form-submit:hover {
+      background: var(--green-mid);
+      transform: translateY(-2px);
+    }
+
+    .form-note {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-mid);
+      margin-top: 16px;
+      font-weight: 300;
+    }
+
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-icon {
+      font-size: 52px;
+      margin-bottom: 16px;
+    }
+
+    .success-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--green-deep);
+      margin-bottom: 10px;
+    }
+
+    .success-body {
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--green-deep);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+
+    .footer-url {
+      font-size: 13px;
+      color: var(--green-light);
+      font-weight: 300;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE UPGRADES ── */
+    @media (min-width: 600px) {
+      .problem-cards { grid-template-columns: 1fr 1fr; }
+      .proof-cards { grid-template-columns: 1fr 1fr; }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (min-width: 760px) {
+      .hero { padding: 80px 48px 60px; }
+      .section { padding: 100px 48px; }
+      .form-card { padding: 52px 48px; }
+    }
+
+    /* Sticky mini CTA bar */
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(26,58,42,0.97);
+      backdrop-filter: blur(10px);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 100;
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+      border-top: 1px solid rgba(168,213,181,0.15);
+    }
+
+    .sticky-bar.visible {
+      transform: translateY(0);
+    }
+
+    .sticky-text {
+      font-size: 13px;
+      color: var(--green-light);
+      font-weight: 300;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sticky-btn {
+      background: var(--gold);
+      color: var(--green-deep);
+      font-weight: 600;
+      font-size: 13px;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .sticky-btn:hover { background: var(--gold-light); }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Dispatch Goods · NACUFS 2026</div>
+  <h1>Your campus generates <em>tons</em> of waste.<br>Every single day.</h1>
+  <p class="hero-sub">Reusable container programs that actually work — reducing tip weights, cutting costs, and earning your institution the sustainability recognition it deserves.</p>
+  <a href="#get-in-touch" class="hero-cta">
+    Tell us about your challenge
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+  <div class="hero-stat-row">
+    <div class="hero-stat">
+      <div class="hero-stat-num">2,000 lbs. / month</div>
+      <div class="hero-stat-label">Avg. tip weight reduction</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">14 Million</div>
+      <div class="hero-stat-label">Items in Circulation</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">Thousands</div>
+      <div class="hero-stat-label">Transatlantic flights avoided in CO2</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem-band">
+  <div class="problem-inner">
+    <div class="section-eyebrow reveal">The challenge you know too well</div>
+    <h2 class="section-title reveal">Campus dining is drowning in single-use.</h2>
+    <p class="section-body reveal">Between student demand for convenience, tight operational budgets, and growing sustainability mandates — finding a practical solution feels impossible. Until now.</p>
+
+    <div class="problem-cards">
+      <div class="problem-card reveal">
+        <div class="problem-icon">🏋️</div>
+        <div>
+          <h3>Tip Weight is Out of Control</h3>
+          <p>Waste hauling costs and sustainability reporting are putting pressure on every campus dining director in the country.</p>
+        </div>
+      </div>
+      <div class="problem-card reveal">
+        <div class="problem-icon">💸</div>
+        <div>
+          <h3>Single-Use Costs Keep Climbing</h3>
+          <p>Disposable packaging is no longer cheap — and students are asking why you're still using it.</p>
+        </div>
+      </div>
+      <div class="problem-card reveal">
+        <div class="problem-icon">🌱</div>
+        <div>
+          <h3>STARS Credits on the Line</h3>
+          <p>AASHE STARS and campus sustainability pledges demand meaningful waste diversion — not just composting programs.</p>
+        </div>
+      </div>
+      <div class="problem-card reveal">
+        <div class="problem-icon">🔄</div>
+        <div>
+          <h3>Past Reusable Programs Failed</h3>
+          <p>Containers that don't come back. Staff overhead. Student confusion. You've been burned before.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section">
+  <div class="section-eyebrow reveal">How Dispatch Goods works</div>
+  <h2 class="section-title reveal">Reusables, finally done right.</h2>
+  <p class="section-body reveal">A closed-loop system designed from the ground up for high-volume campus environments. No containers lost. No operational headaches. Just results.</p>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Reusable Containers Replace Single-Use</h3>
+        <p>Dispatch Goods reusable containers and cups are deployed directly into your dining operation — replacing disposables at the point of service. No student sign-up, no deposits, no penalties. Students simply use them.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>QR Codes Identify Every Container</h3>
+        <p>Each container and cup has a unique QR code linked to its own geo-fenced landing page. When a student scans it, they're guided back to the nearest return point — making the return process intuitive and frictionless without any app download or account required.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Containers Are Returned at Drop Points</h3>
+        <p>Convenient return stations are placed throughout campus — dining halls, residence halls, libraries. Students drop containers off when they're done. No fees, no penalties, no friction.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Dispatch Goods Hauls Used, Delivers Clean &amp; Reports</h3>
+        <p>On every service visit, Dispatch Goods picks up used containers and simultaneously delivers a fresh supply of commercially sanitized ones — so your operation never runs dry. Your staff handles none of the logistics. You receive real-time data on waste diverted, containers in circulation, and cost savings — report-ready for STARS submissions and sustainability reporting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="proof-band">
+  <div class="proof-inner">
+    <div class="proof-eyebrow reveal">Results from the field</div>
+    <h2 class="proof-title reveal">Real institutions.<br>Real numbers.</h2>
+
+    <div class="proof-cards">
+      <div class="proof-card reveal">
+        <div class="proof-card-tag">Higher Education: Single-Use Containers</div>
+        <div class="proof-stat">80%</div>
+        <div class="proof-stat-label">Reduction in single-use container waste within first semester of launch</div>
+        <div class="proof-quote">
+          “Dispatch is not just a vendor. They’re a partner in strategic waste reduction and behavior change.”
+          <div class="proof-attribution">— Director of Retail, Swarthmore College</div>
+        </div>
+      </div>
+
+      <div class="proof-card reveal">
+        <div class="proof-card-tag">Higher Education: Waste, Water, CO2</div>
+        <div class="proof-stat">1,918 pounds + 6,309 gallons + 5.37 Tonnes</div>
+        <div class="proof-stat-label">Pounds of packaging diverted from landfill, gallons of water saved, and tonnes of CO2e avoided in just the 1st month of operation</div>
+        <div class="proof-quote">
+          “Dispatch is systems forward-thinking and always looking to improve metrics, cost savings, and program success.”
+          <div class="proof-attribution">George Washington University Dining</div>
+        </div>
+      </div>
+
+      <div class="proof-card reveal">
+        <div class="proof-card-tag">Cost Impact</div>
+        <div class="proof-stat">~$3,878</div>
+        <div class="proof-stat-label">ROI of CPU vs. continued single-use disposables over a two-year period</div>
+        <div class="proof-quote">
+          “We’re not just saving on a cost per unit basis but waste hauling fees and no loss fees or opt-ins holding us back.”
+          <div class="proof-attribution">Dir Finance, Bryn Mawr College</div>
+        </div>
+      </div>
+
+      <div class="proof-card reveal">
+        <div class="proof-card-tag">Return Rates</div>
+        <div class="proof-stat">80% --> 98%</div>
+        <div class="proof-stat-label">Container return rate — above industry average for reusable programs across higher-education, healthcare, and corporate offices.</div>
+        <div class="proof-quote">
+          “It’s no wonder adoption rates of Dispatch’s reuse system are so high with such attention to detail in bin infrastructure and the simplicity of matching colors.”
+          <div class="proof-attribution">Director of Dining Operations, AstraZeneca</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY HIGHER ED -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="section-eyebrow reveal">Built for campus dining</div>
+    <h2 class="section-title reveal">Why higher ed loves Dispatch Goods.</h2>
+
+    <div class="why-grid">
+      <div class="why-item reveal">
+        <div class="why-dot"></div>
+        <div>
+          <h3>AASHE STARS Aligned</h3>
+          <p>Direct credit toward Dining, Waste, and Engagement categories. We'll help you document it.</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-dot"></div>
+        <div>
+          <h3>No New Staff Required</h3>
+          <p>Dispatch Goods handles collection logistics. Your team doesn't take on new operational burden.</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-dot"></div>
+        <div>
+          <h3>Cost-Neutral or Better</h3>
+          <p>Structured to offset or outperform the ongoing cost of single-use packaging over time.</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-dot"></div>
+        <div>
+          <h3>Tip Weight Reduction</h3>
+          <p>Less landfill tonnage means lower hauling costs and better sustainability reporting numbers.</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-dot"></div>
+        <div>
+          <h3>Student Sustainability Goals</h3>
+          <p>Gen Z students are demanding action. This gives you a visible, meaningful program to point to.</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-dot"></div>
+        <div>
+          <h3>Flexible Pilot Options</h3>
+          <p>Start with one dining hall, one meal period, or one building. We scale with you, not ahead of you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="get-in-touch">
+  <div class="form-inner">
+    <div style="text-align:center; margin-bottom: 40px;">
+      <div class="section-eyebrow reveal" style="display:inline-block;">Let's start a conversation</div>
+      <h2 class="section-title reveal" style="text-align:center;">What's your biggest waste challenge?</h2>
+      <p class="section-body reveal" style="text-align:center; max-width: 480px; margin: 0 auto;">Tell us what's keeping you up at night — we'll come back with answers, data, and a plan. No pitch until you're ready.</p>
+    </div>
+
+    <div class="form-card reveal">
+      <h3 class="form-title">Get in touch</h3>
+      <p class="form-sub">Takes 2 minutes. Submissions go directly to our team — we'll follow up within 24 hours or book a time that works for you.</p>
+
+      <!-- ============================================================
+           ZOHO CRM WEB FORM EMBED
+           HOW TO GENERATE YOUR EMBED CODE:
+           1. In Zoho CRM → go to Setup → Developer Space → Webforms
+           2. Click "Create New Form" — name it "NACUFS 2026”
+           3. Add fields: First Name, Last Name, Email, Company (Institution),
+              Title (Role), No. of Employees (Enrollment), Description (Challenge + Notes)
+           4. Under "Lead Source" set default value = "NACUFS 2026 Conference"
+           5. Click "Generate Code" → copy the <script> embed snippet
+           6. Replace the placeholder block below with your copied snippet
+           7. Optional: In the form settings, set a redirect URL to a
+              "thank you" page or add a Calendly link as the post-submit URL
+           ============================================================ -->
+
+      <div id="zoho-form-wrapper">
+        <script id='formScript5928514000026338002' src='https://crm.zoho.com/crm/WebFormServeServlet?rid=b54a832237f10582ff7ef4c90c942a216a3a52e09e4499fc37cc5f8a8b3e09785c81d19985c88d338042331fc2bebcd7gidf2e280c836eb0c1cc61953891392032e1586cd41e64a6641e885b5d25c63a92c&script=$sYG'> </script>
+      </div>
+
+      <p class="form-note" style="margin-top: 20px;">We don't sell your info. You'll hear from a real person — no automated sequences.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Dispatch Goods</div>
+  <div class="footer-url">dispatchgoods.com</div>
+</footer>
+
+<!-- Sticky CTA Bar -->
+<div class="sticky-bar" id="sticky-bar">
+  <span class="sticky-text">Ready to cut your waste footprint?</span>
+  <a href="#get-in-touch" class="sticky-btn">Book a meeting →</a>
+</div>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Sticky bar
+  const stickyBar = document.getElementById('sticky-bar');
+  const formSection = document.getElementById('get-in-touch');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY > 400;
+    const atForm = formSection.getBoundingClientRect().top < window.innerHeight;
+    stickyBar.classList.toggle('visible', scrolled && !atForm);
+  });
+
+  // Zoho CRM Webform handles its own submission + redirect.
+  // To customize post-submit behavior, set your "Redirect URL" in
+  // Zoho CRM → Setup → Webforms → [Your Form] → Form Settings.
+</script>
+
+</body>
+</html>
